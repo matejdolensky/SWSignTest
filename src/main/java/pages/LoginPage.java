@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -8,18 +9,18 @@ import java.time.Duration;
 
 public class LoginPage {
 
-    private WebDriver driver;
+    private final WebDriver driver;
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    private By emailAddressBy = By.id("email");
-    private By passwordBy = By.id("password");
-    private By nextButtonBy = By.cssSelector("#login-email");
-    private By logInWithPasswordBy = By.id("LOGIN_WITH_PASSWORD");
+    private final By emailAddressBy = By.id("email");
+    private final By passwordBy = By.id("password");
+    private final By logInWithPasswordBy = By.id("LOGIN_WITH_PASSWORD");
 
 
+    @Step("Fill out the email address: {emailAddress} and submit")
     public void fillOutEmailAddress(String emailAddress) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
@@ -30,6 +31,7 @@ public class LoginPage {
     }
 
 
+    @Step("Click on log in with password")
     public void clickOnLoginWithPassword() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
@@ -37,6 +39,7 @@ public class LoginPage {
         driver.findElement(logInWithPasswordBy).findElement(By.cssSelector("button")).click();
     }
 
+    @Step("Fill out the password and submit")
     public void fillOutPassword(String password){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 

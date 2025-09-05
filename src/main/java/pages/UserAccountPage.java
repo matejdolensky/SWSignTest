@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,7 +12,7 @@ import java.time.Duration;
 
 public class UserAccountPage {
 
-    private WebDriver driver;
+    private final WebDriver driver;
 
     public UserAccountPage(WebDriver driver) {
         this.driver = driver;
@@ -20,6 +21,7 @@ public class UserAccountPage {
     private final By languageSelectBy = By.id("languages");
     private final By saveButtonBy = By.id("confirm");
 
+    @Step("Select corresponding language by language code")
     public void selectLanguage(String languageCode){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 

@@ -1,7 +1,5 @@
 package api;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import core.BaseApiTest;
 import io.restassured.common.mapper.TypeRef;
 import io.restassured.response.Response;
@@ -34,12 +32,12 @@ public class ApiTest extends BaseApiTest {
         Assertions.assertNotNull(response.asString(), "Response body not empty.");
 
 
-        List<ClientDto> clientInformations = response.as(new TypeRef<List<ClientDto>>() {
+        List<ClientDto> clientInformation = response.as(new TypeRef<List<ClientDto>>() {
         });
 
-        int numberOfPruducts = clientInformations.get(0).products.size();
+        int numberOfProducts = clientInformation.get(0).products.size();
 
-        System.out.println(String.format("Client has %s products!", numberOfPruducts));
+        System.out.println(String.format("Client has %s products!", numberOfProducts));
     }
 
 }

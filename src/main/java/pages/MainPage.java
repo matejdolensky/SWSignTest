@@ -12,7 +12,8 @@ import java.time.Duration;
 
 public class MainPage {
 
-    private WebDriver driver;
+    private final WebDriver driver;
+    private final WebDriverWait wait;
 
     private final By loginButtonBy = By.cssSelector(".klp-widget-anonymous__text");
     private final By profileButtonBy = By.cssSelector("#post-klp-login-widget > div.klp-widget-authenticated > div > a");
@@ -23,16 +24,16 @@ public class MainPage {
 
     public MainPage(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
     }
 
 
     @Step("Click on login button")
     public void clickOnLoginButton() {
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         SearchContext shadowRootElement = driver.findElement(rootElementBy).getShadowRoot();
 
-        WebElement acceptCookiesElement = wait.until(driver1 -> {
+        WebElement acceptCookiesElement = wait.until(driver -> {
             WebElement el = shadowRootElement.findElement(acceptCookiesButton);
             return (el.isDisplayed()) ? el : null;
         });
@@ -44,7 +45,7 @@ public class MainPage {
         SearchContext firstLoginShadowRoot = driver.findElement(loginHeaderRootElementBy).getShadowRoot();
         SearchContext secondLoginShadowRoot = firstLoginShadowRoot.findElement(By.cssSelector(".main-navigation-controls")).findElement(By.cssSelector("post-klp-login-widget")).getShadowRoot();
 
-        WebElement loginButtonElement = wait.until(driver1 -> {
+        WebElement loginButtonElement = wait.until(driver -> {
             WebElement el = secondLoginShadowRoot.findElement(loginButtonBy);
             return (el.isDisplayed()) ? el : null;
         });
@@ -52,28 +53,26 @@ public class MainPage {
         loginButtonElement.click();
     }
 
+    @Step("Go to my profile from main page")
     public void goToMyProfile() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(loginHeaderRootElementBy));
 
         SearchContext firstLoginShadowRoot = driver.findElement(loginHeaderRootElementBy).getShadowRoot();
         SearchContext secondLoginShadowRoot = firstLoginShadowRoot.findElement(By.cssSelector(".main-navigation-controls")).findElement(By.cssSelector("post-klp-login-widget")).getShadowRoot();
 
-        wait.until(driver1 -> {
+        wait.until(driver -> {
             WebElement el = secondLoginShadowRoot.findElement(profileButtonBy);
             return (el.isDisplayed()) ? el : null;
         });
 
         secondLoginShadowRoot.findElement(profileButtonBy).click();
 
-        wait.until(driver1 -> {
+        wait.until(driver -> {
             WebElement el = secondLoginShadowRoot.findElement(authenticatedMenuBy);
             return (el.isEnabled()) ? el : null;
         });
 
         secondLoginShadowRoot.findElement(authenticatedMenuBy).findElements(By.cssSelector(".notification-link")).get(0).click();
-
-
     }
 }

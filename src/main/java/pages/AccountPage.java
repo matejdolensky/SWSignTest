@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,16 +11,16 @@ import java.time.Duration;
 
 public class AccountPage {
 
-    private WebDriver driver;
+    private final WebDriver driver;
 
-    private By userInfoLanguageBy = By.id("userInfoLanguage");
-    private By editUserInfoLanguage = By.id("editUserInfoLanguage");
+    private final By userInfoLanguageBy = By.id("userInfoLanguage");
+    private final By editUserInfoLanguage = By.id("editUserInfoLanguage");
 
     public AccountPage(WebDriver driver) {
         this.driver = driver;
     }
 
-
+    @Step("Open correspondence language setting")
     public void openCorrespondenceLanguageSetting(){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(editUserInfoLanguage));
@@ -28,8 +29,8 @@ public class AccountPage {
 
     }
 
-
-    public String getCurrentCorrespondingLanguge() {
+    @Step("Get current set corresponding language")
+    public String getCurrentCorrespondingLanguage() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(userInfoLanguageBy));
 
